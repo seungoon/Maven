@@ -1,0 +1,90 @@
+１．Mavenの設定
+https://github.com/samaxes/minify-maven-plugin
+
+※サンプル例：
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>jp.ijufumi.sample</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+               ・
+               ・
+               ・
+    <build>
+        <plugins>
+               ・
+               ・
+               ・
+            <!-- war plugin setting -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <!-- 一旦、cssとjsをwarファイルに含まないようにする -->
+                    <warSourceExcludes>
+                        WEB-INF/css/**/*.css, WEB-INF/js/**/*.js
+                    </warSourceExcludes>
+                    <!-- 既に圧縮されているものwarファイルに含むようにする -->
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/WEB-INF/css</directory>
+                            <targetPath>WEB-INF/css</targetPath>
+                            <includes>
+                                <include>**/*.min.css</include>
+                            </includes>
+                        </resource>
+                        <resource>
+                            <directory>src/main/webapp/WEB-INF/js</directory>
+                            <targetPath>WEB-INF/js</targetPath>
+                            <includes>
+                                <include>**/*.min.js</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <!-- minify js and css -->
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <id>default-minify</id>
+                        <configuration>
+                            <!-- srcフォルダに圧縮したものを置かないように、作成先はtargetフォルダにする -->
+                            <webappSourceDir>${basedir}/src/main/webapp/WEB-INF</webappSourceDir>
+                            <webappTargetDir>${project.build.directory}/${project.build.finalName}/WEB-INF</webappTargetDir>
+                            <!-- 圧縮したファイルは元のファイルの代わりなので、マージはなしにしている。 -->
+                            <skipMerge>true</skipMerge>
+                            <!-- 圧縮したファイルは元のファイルの代わりなので、suffixはなしにしている。 -->
+                            <nosuffix>true</nosuffix>
+                            <!-- 圧縮対象のファイルを指定 -->
+                            <cssSourceIncludes>
+                                <cssSourceInclude>**/*.css</cssSourceInclude>
+                            </cssSourceIncludes>
+                            <cssSourceExcludes>
+                                <cssSourceExclude>**/*.min.css</cssSourceExclude>
+                            </cssSourceExcludes>
+                            <jsSourceIncludes>
+                                <jsSourceInclude>**/*.js</jsSourceInclude>
+                            </jsSourceIncludes>
+                            <jsSourceExcludes>
+                                <jsSourceExclude>**/*.min.js</jsSourceExclude>
+                            </jsSourceExcludes>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
