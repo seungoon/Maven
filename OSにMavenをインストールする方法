@@ -1,0 +1,5 @@
+１．以下のサイトを参考
+　・http://web-dev.hatenablog.com/entry/maven/windows-install
+
+※方法：
+手順1. ダウンロードMaven のダウンロードページ から、安定版の「Binary Zip archive」をダウンロードします。記事作成日（2016.04.01）の安定版は 3.3.3 で、ファイル名は apache-maven-3.3.3-bin.zip でした。手順2. 解凍ダウンロードしたら、Zip を好きな場所（例：C:\apache-maven-3.3.3）に解凍します。手順3. 環境変数 Path の設定Maven の binフォルダ（例：C:\apache-maven-3.3.3\bin）を、環境変数 Path に追加します。手順4. 動作確認（任意）コマンドプロンプトで mvn --version を実行します。Maven のバージョン等が表示されれば成功です。
