@@ -1,0 +1,2 @@
+１．C:\Users\ユーザー名\.m2　配下に「settings.xml」を追加する。
+　・Mavenを実行するときに、「settings.xml」に設定したプロキシサーバを経由するため。
